@@ -1,0 +1,15 @@
+USE [MEFSS_water]
+
+SELECT 
+	CONVERT(DATETIME, CONVERT(VARCHAR(10), CAST(sdate AS DATE), 112) + ' ' + CAST(STUFF(stime,3,0,':') AS VARCHAR(10))) AS 'SampleDate',
+	lat_decimal AS 'Latitude',
+	lon_decimal AS 'Longitude',
+	Temp AS 'Temperature',
+	pH as 'pH',
+	Salinity AS 'Salinity',
+	DO_mgL AS 'Dissolved Oxygen (mg/l)',
+	DO_prcnt_sat AS 'Dissolved Oxygen Saturation (%)',
+	sampledby AS 'Sampled By'
+FROM dbo.tyear_sed_mas 
+WHERE jmpst = 1452
+ORDER BY SampleDate
