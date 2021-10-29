@@ -1,0 +1,46 @@
+Sensor_ID,Sensor_Name,ID,Descr,Type,Unit,RangeMin,RangeMax
+5729-71,Motus Wave Sensor,1,Significant Wave Height Hm0,VT_R4,m,0,30
+5729-71,Motus Wave Sensor,2,Wave Peak Direction,VT_R4,Deg.M,0,360
+5729-71,Motus Wave Sensor,29,Wave Mean Direction,VT_R4,Deg.M,0,360
+5729-71,Motus Wave Sensor,31,Wave Mean Period Tm02,VT_R4,s,0,30
+5729-71,Motus Wave Sensor,3,Wave Peak Period,VT_R4,s,0,30
+5729-71,Motus Wave Sensor,30,Wave Height Hmax,VT_R4,m,0,30
+4420-1072,Doppler Current Sensor,10,Abs Speed,VT_R4,cm/s,0,300
+4420-1072,Doppler Current Sensor,12,Direction,VT_R4,Deg.M,0,360
+4420-1072,Doppler Current Sensor,13,North,VT_R4,cm/s,-300,300
+4420-1072,Doppler Current Sensor,14,East,VT_R4,cm/s,-300,300
+4420-1072,Doppler Current Sensor,25,Heading,VT_R4,Deg.M,0,360
+4420-1072,Doppler Current Sensor,23,Tilt X,VT_R4,Deg,-45,45
+4420-1072,Doppler Current Sensor,24,Tilt Y,VT_R4,Deg,-45,45
+4420-1072,Doppler Current Sensor,21,SP Std,VT_R4,cm/s,0,20
+4420-1072,Doppler Current Sensor,22,Strength,VT_R4,dB,-80,0
+4420-1072,Doppler Current Sensor,26,Ping Count,VT_I2,,,
+4420-1072,Doppler Current Sensor,41,Abs Tilt,VT_R4,Deg,0,90
+4420-1072,Doppler Current Sensor,42,Max Tilt,VT_R4,Deg,0,90
+4420-1072,Doppler Current Sensor,43,Std Tilt,VT_R4,Deg,0,90
+5400-386,Doppler Current Profiler Sensor,12,Record State,VT_I4,,,
+5400-386,Doppler Current Profiler Sensor,0,Ping Count,VT_I2,,0,3600
+GMX500-19230021,Gill MaxiMet,0,Average Wind Direction,VT_R4,Deg,0,360
+GMX500-19230021,Gill MaxiMet,1,Average Wind Speed,VT_R4,m/s,0,60
+GMX500-19230021,Gill MaxiMet,2,Gust Direction,VT_R4,Deg,0,360
+GMX500-19230021,Gill MaxiMet,3,Gust Speed,VT_R4,m/s,0,60
+GMX500-19230021,Gill MaxiMet,4,Pressure,VT_R4,hPa,300,1100
+GMX500-19230021,Gill MaxiMet,5,Pressure at Sea Level,VT_R4,hPa,300,1100
+GMX500-19230021,Gill MaxiMet,6,Pressure at Station,VT_R4,hPa,300,1100
+GMX500-19230021,Gill MaxiMet,7,Relative Humidity,VT_R4,%,0,100
+GMX500-19230021,Gill MaxiMet,8,Absolute Humidity,VT_R4,g/m3,,
+GMX500-19230021,Gill MaxiMet,9,Temperature,VT_R4,DegC,-40,70
+GMX500-19230021,Gill MaxiMet,10,Dewpoint,VT_R4,DegC,-40,70
+GMX500-19230021,Gill MaxiMet,11,Compass Heading,VT_R4,Deg,0,360
+GMX500-19230021,Gill MaxiMet,12,Supply Voltage,VT_R4,V,5,30
+GMX500-19230021,Gill MaxiMet,13,Status,VT_R4,,,
+GMX500-19230021,Gill MaxiMet,14,GPS Latitude,VT_R4,Deg,-90,90
+GMX500-19230021,Gill MaxiMet,15,GPS longitude,VT_R4,Deg,-180,180
+GMX500-19230021,Gill MaxiMet,16,GPS Altitude,VT_R4,m,0,100
+5979-158631,Lantern SolaMax-65,0,Lantern voltage,VT_R4,volt,0,16
+5979-158631,Lantern SolaMax-65,2,Lantern voltage Average,VT_R4,volt,0,16
+5979-158631,Lantern SolaMax-65,3,Lantern voltage Min,VT_R4,volt,0,16
+5979-158631,Lantern SolaMax-65,4,Lantern voltage Max,VT_R4,volt,0,16
+5979-158631,Lantern SolaMax-65,5,Lantern voltage StdDev,VT_R4,,,
+5979-158631,Lantern SolaMax-65,7,Lantern voltage Number Of Samples,VT_I4,,0,12
+5979-158631,Lantern SolaMax-65,8,Lantern voltage Executed Samples,VT_I4,,0,12

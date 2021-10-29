@@ -1,0 +1,1183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSpy v2018 rel. 2 (http://www.altova.com) by Jan Flatlandsmo (Aanderaa Data Instruments AS) -->
+<xs:schema xmlns="http://www.aadi.no/RTOutSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:con="http://www.aadi.no/RTConfigSchema" xmlns:layout="http://www.aadi.no/RTDeviceLayoutSchema" targetNamespace="http://www.aadi.no/RTOutSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://www.aadi.no/RTConfigSchema" schemaLocation="RTConfigSchema.xsd"/>
+	<xs:import namespace="http://www.aadi.no/RTDeviceLayoutSchema" schemaLocation="RTDeviceLayoutSchema.xsd"/>
+	<xs:complexType name="Parameter">
+		<xs:annotation>
+			<xs:documentation>Represents the base class for all basic parameter types (Point, Vector, Spectrum and TimeSeries).</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="StatusCode" type="xs:int" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Parameter status code. Usually not present if everything is OK.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TimeOffset" type="xs:double" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Time offset in relation to the parent Data element timestamp, and possibly also the SensorData element timestamp (decimal seconds).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Value" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The actual parameter value (measurement). The value may be missing or empty, depending on the device configuration and context.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="ID" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>A unique ID (within the sensor) for this specific parameter.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Descr" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Parameter description, e.g. pressure or temperature.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Type" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>The data type of the parameter value.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Format" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>The number format of the parameter value.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Unit" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>The physical unit of the parameter value, e.g. kPa or DegC.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="FillValue" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Generic applications often need to write a value to represent undefined or missing values. The fill value provides an appropriate value for this purpose because it is normally outside the valid range and therefore treated as missing when read by generic applications. It is legal (but not recommended) for the fill value to be within the valid range.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="RangeMin" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>The minimum parameter value.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="RangeMax" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>The maximum parameter value.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Disabled" type="xs:boolean" use="optional" default="false">
+			<xs:annotation>
+				<xs:documentation>Value indicating if the parameter is disabled (value not recorded).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ForwardDisabled" type="xs:boolean" use="optional" default="false">
+			<xs:annotation>
+				<xs:documentation>Value indicating parameter should be recorded but not transmitted by logger.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="TimeOffsetSupport" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>Value indicating if time offset information is supported on this parameter (default is false). </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:element name="Point" type="Parameter">
+		<xs:annotation>
+			<xs:documentation>Represents a point parameter (single value measurement).</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Vector">
+		<xs:annotation>
+			<xs:documentation>Represents a vector parameter (multiple value vector measurement).</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="Parameter">
+					<xs:attribute name="Dimension" type="xs:int" use="optional">
+						<xs:annotation>
+							<xs:documentation>Vector dimension (number of values).</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="TimeSeries">
+		<xs:annotation>
+			<xs:documentation>Represents a timeseries parameter (multiple value time series measurement).</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="Parameter">
+					<xs:attribute name="SamplingInterval" type="xs:double" use="optional">
+						<xs:annotation>
+							<xs:documentation>Sampling interval (decimal seconds).</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="NumSamples" type="xs:int" use="optional">
+						<xs:annotation>
+							<xs:documentation>Number of samples in the time series.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Spectrum">
+		<xs:annotation>
+			<xs:documentation>Represents a spectrum parameter (multiple value spectrum measurement).</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="Parameter">
+					<xs:attribute name="FreqStart" type="xs:double" use="optional">
+						<xs:annotation>
+							<xs:documentation>Absolute frequency of the first value in the spectrum.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="FreqResolution" type="xs:double" use="optional">
+						<xs:annotation>
+							<xs:documentation>Absolute difference in frequency between each value in the spectrum.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="FreqUnit" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>Frequency unit, e.g. Hz.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="Size" type="xs:int" use="optional">
+						<xs:annotation>
+							<xs:documentation>Number of values in the spectrum.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Cell">
+		<xs:annotation>
+			<xs:documentation>Represents a single cell in a profiler column. Each cell contains one or more parameters. Each of these parameters are linked to the matching CellAttributes parameter by the parameter ID. The ID is the only attribute used for parameters below the Cell element.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Point" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>List of point parameters in this cell.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="TimeSeries" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>List of time series parameters in this cell.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="Vector" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>List of vector parameters in this cell.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="Spectrum" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>List of spectrum parameters in this cell.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="Index" type="xs:int" use="required">
+				<xs:annotation>
+					<xs:documentation>The cell index in the current column. The index values spans from 0 to Column/NumCells – 1. Index 0 refers to the cell closest to the reference.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CellAttributes">
+		<xs:annotation>
+			<xs:documentation>Represents the metadata for each parameter in each cell in a profiler column.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Point" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>List of point parameters.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="TimeSeries" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>List of time series parameters.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="Vector" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>List of vector parameters.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="Spectrum" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>List of spectrum parameters.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Column">
+		<xs:annotation>
+			<xs:documentation>Represents a profiler column, containing one or more cells.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="StatusCode" type="xs:int" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Column status code. Usually not present if everything is OK.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="CellAttributes" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Contains a list of parameters contained in each cell in the column. The attributes of these parameters (description, type etc.) are specified in this element, whereas the parameter elements in each Cell element has only the ID attribute. The CellAttributes element can be seen as a dummy Cell element. Since each cell must have the exact same parameters, there can be only one CellAttributes element.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="Cell" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>List of cells in this column. The number of cells must always equal the NumCells attribute in the Column element.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="Index" type="xs:int" use="required">
+				<xs:annotation>
+					<xs:documentation>Column index (unique in this profile).</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="Descr" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>Colimn description</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="SurfaceReferred" type="xs:boolean" use="optional">
+				<xs:annotation>
+					<xs:documentation>Surface referred (true/false).</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="ColumnStart" type="xs:double" use="optional">
+				<xs:annotation>
+					<xs:documentation>Distance from reference (surface or device) in [m]. This attribute is obsolite, use the ColumnStartCellCenter</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="ColumnStartCellCenter" type="xs:double" use="optional">
+				<xs:annotation>
+					<xs:documentation>Distance from reference (surface or device) to center of first cell, in [m]. This attribute will replace the ColumnStart. When both attribute exsist in the xml, this attribute will override the ColumnStart</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="CellSize" type="xs:double" use="optional">
+				<xs:annotation>
+					<xs:documentation>Cell size in [m].</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="NumCells" type="xs:int" use="optional">
+				<xs:annotation>
+					<xs:documentation>Number of cells in the column.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="CellOverlap" type="xs:double" use="optional">
+				<xs:annotation>
+					<xs:documentation>Cell overlap in [%]. This attribute is obsolite. Use the CellCenterSpacing.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="TransducerDirection" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>The direction of the transducer, must be Up, Down or Horizontal.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="Disabled" type="xs:boolean" use="optional" default="false">
+				<xs:annotation>
+					<xs:documentation>Value indicating if the column is disabled (value not recorded).</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="ForwardDisabled" type="xs:boolean" use="optional" default="false">
+				<xs:annotation>
+					<xs:documentation>Value indicating column should be recorded but not transmitted by logger.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="SurfaceCellColumn" type="xs:boolean" use="optional" default="false"/>
+			<xs:attribute name="CellCenterSpacing" type="xs:double" use="optional">
+				<xs:annotation>
+					<xs:documentation>This attibute replace the CellOverlap. When both attribute exsist in the xml, this attribute will overrride the CellOverlap. CellCenterSpacing will both be used for overlap, but also used for spacing between cells. the unit are in meter</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Profile">
+		<xs:annotation>
+			<xs:documentation>Represents data from a profiler, containing one or more columns.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="StatusCode" type="xs:int" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Profile status code. Usually not present if everything is OK.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="Column" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>List of columns in this profile.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="ID" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>A unique ID (within the sensor) for this specific parameter.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="Descr" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>Parameter description.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="Disabled" type="xs:boolean" use="optional" default="false">
+				<xs:annotation>
+					<xs:documentation>Value indicating if the profile is disabled (value not recorded).</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="ForwardDisabled" type="xs:boolean" use="optional" default="false">
+				<xs:annotation>
+					<xs:documentation>Value indicating profile should be recorded but not transmitted by logger.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Parameters">
+		<xs:annotation>
+			<xs:documentation>Represents a list of measurement parameters (values).</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Point" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>List of point parameters (single value measurement).</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="TimeSeries" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>List of time series parameters (multiple value time series measurements).</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="Vector" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>List of vector multiple value vector parameters (multiple value vector measurements).</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="Spectrum" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>List of spectrum parameters (multiple value spectrum measurements).</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="Profile" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>List of profile parameters.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Data">
+		<xs:annotation>
+			<xs:documentation>Represents a dataset with data from one or more sensors and/or system nodes.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Time" type="xs:dateTime">
+					<xs:annotation>
+						<xs:documentation>The time when the data were actually collected from the sensors. This may differ from the timestamp in the Device element.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="RecordNumber" type="xs:int">
+					<xs:annotation>
+						<xs:documentation>Data record number. The record number starts at 0 and increments by 1 for each new record. The upper limit is 2^31 (signed 32bit integer), at which point the sequence starts from 1 again.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="SensorData" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>List of sensor data.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="SystemData" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>List of system node data (internal device sensors).</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SpecifiedInterval" type="xs:double" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>The interval specified in the device configuration (decimal seconds). This may differ from the actual interval.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ActualInterval" type="xs:double" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>The actual interval since the previous recording (decimal seconds).</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="RecordsDenominator" type="xs:int" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="SessionID" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>ID identifying a recorder session. Updated every time the recorder is restarted.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="GroupID" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>Value specifying which recording group that generated this dataset. Only relevant on devices with multi-group recorders.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="GroupDescr">
+				<xs:annotation>
+					<xs:documentation>The name/description of the recorder group. Only relevant on devices with multi-group recorders.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Response">
+		<xs:annotation>
+			<xs:documentation>Represents a response to a control message.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Return" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>List of responses to individual control commands in the response.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Success" type="xs:boolean">
+								<xs:annotation>
+									<xs:documentation>Value indicating if the control command was successfully executed.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Info" type="xs:string" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>More info about the success status. May be empty if the command was successful.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="ReturnValues" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>List of return values.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ReturnValue" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>List of return values.</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="ID" type="xs:int" use="required">
+							<xs:annotation>
+								<xs:documentation>Control command ID.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="ID" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>Response message ID. Always equal to the Control message ID which triggered this response.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ReturnValue">
+		<xs:annotation>
+			<xs:documentation>Represents a single return value in a response to a control message.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="ID" type="xs:int" use="required">
+						<xs:annotation>
+							<xs:documentation>Return value ID.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="Type" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>Data type.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="Descr" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>Return value description.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SiteInfo">
+		<xs:annotation>
+			<xs:documentation>OBSOLETE (replaced by the more generel SystemInfo element).</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Location" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>OBSOLETE</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="GeoPosition" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>OBSOLETE</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="VerticalPosition" type="xs:double" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>OBSOLETE</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Owner" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>OBSOLETE</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Reference" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>OBSOLETE</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Notification">
+		<xs:annotation>
+			<xs:documentation>Represents a notification of some kind from the device.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Info" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>A text describing this particular notification.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Level" type="xs:int" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Notification level (0=System, 10=Information, 20=Warning, 30=Error).</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="NotificationValues" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>List of additional notification data.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="NotificationValue" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>List of additional notification data.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="Time" type="xs:dateTime" use="required">
+				<xs:annotation>
+					<xs:documentation>Notification timestamp.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="ID" type="xs:int" use="required">
+				<xs:annotation>
+					<xs:documentation>Notification ID.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="Descr" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>Notification description (always same for the same ID).</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="NotificationValue">
+		<xs:annotation>
+			<xs:documentation>Represents additional information or values in a device notification.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="ID" type="xs:int" use="required">
+						<xs:annotation>
+							<xs:documentation>Notification value ID.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="Type" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>Data type.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="Descr" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>Notification value description.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SensorInformation">
+		<xs:annotation>
+			<xs:documentation>Represents a collection of sensor metadata.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="SensorInfo" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>List of sensor information.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SensorDependencies" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>List of sensor dependency groups.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="SensorDependency" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>List of sensor dependency groups.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="ConnectionInterfaces" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>List of connection interfaces.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="ConnectionInterface" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>List of connection interfaces.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="Time" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Sensor information timestamp.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SensorInfo">
+		<xs:annotation>
+			<xs:documentation>Represents the metadata from a single sensor.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ProcessingTime" type="xs:int" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Processing time in ms.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="Parameters" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>List of sensor parameters.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="VersionInformation" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>List of version information for software and hardware components.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="VersionInfo" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>List of version information for software and hardware components.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="ServiceInfo" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Service and calibration information for the sensor.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<!--
+				<xs:element name="InputParameters" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="InputParameter" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="SourceSensorID" type="xs:string"/>
+										<xs:element name="SourceParameterID" type="xs:int"/>
+									</xs:sequence>
+									<xs:attribute name="ID" type="xs:int" use="required"/>
+									<xs:attribute name="Descr" type="xs:string" use="optional"/>
+									<xs:attribute name="Type" type="xs:string" use="optional"/>
+									<xs:attribute name="Unit" type="xs:string"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				-->
+			</xs:sequence>
+			<xs:attribute name="ID" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>Sensor ID.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="SerialNo" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>Sensor serial number.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="ProdNo" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>Sensor product number.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="ProdName" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>Sensor product name.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="Descr" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>Sensor description.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="Adr" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>Internal AiCaP address.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="ProtocolVer" type="xs:double" use="optional">
+				<xs:annotation>
+					<xs:documentation>Protocol version.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="IsVirtual" type="xs:boolean" use="optional">
+				<xs:annotation>
+					<xs:documentation>Value indicating if the sensor is virtual.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="GeoPosition" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>WGS-84 coordinates in Lat/Lon decimal degrees format (DD).</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="VerticalPosition" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>Height (positive) or depth (negative) of sensor location.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="NodeTypeID" type="xs:int" use="optional">
+				<xs:annotation>
+					<xs:documentation>AADI node type (category) ID.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="DeviceType">
+		<xs:annotation>
+			<xs:documentation>Device type enumeration.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Instrument"/>
+			<xs:enumeration value="Sensor"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="Device">
+		<xs:annotation>
+			<xs:documentation>Represents the root element in any device message.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="To" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>The specific recipient of this message (if any). Typically used when the device sends a response to a control message.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="Response" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Response to a control message.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Time" type="xs:dateTime">
+					<xs:annotation>
+						<xs:documentation>The UTC timestamp when the current message was compiled for transmission.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="TimeReceived" type="xs:dateTime" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>UTC timestamp for when received by PC software such as the AADI RT Collector.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="TimeCorrection" type="xs:double" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Accumulated time correction applied to device since last power-up (decimal seconds). Only relevant for devices that support time adjustment commands.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="StatusCode" type="xs:int" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Device status code. Usually not present if everything is OK.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SystemInformation" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>List of static system parameters, such as location of vertical position.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="SystemInfo" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>List of static system parameters, such as location of vertical position.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="SiteInfo" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>OBSOLETE (replaced by the more generel SystemInformation list).</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="Data" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Data from one or more sensors.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="con:Config" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Device configuration. Only relevant during remote configuration of the device. </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Notifications" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Notifications or alarms from the device.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="Notification" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="SensorInformation" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Sensor Information (metadata).</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="layout:Layout" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Device specific installation settings. Only relevant during remote configuration of the device. </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="ID" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>Globally unique device ID, usually built from the device product number and serial number.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="SessionID" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>Session ID. updated when the device config changes.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="Descr" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>User-defined device description.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="SerialNo" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>Device serial number.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="ProdNo" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>Device product number.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="ProdName" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>Device product name.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="DeviceType" type="DeviceType" use="optional">
+				<xs:annotation>
+					<xs:documentation>Device type (Instrument or Sensor).</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="ProtocolVer" type="xs:double" use="optional">
+				<xs:annotation>
+					<xs:documentation>Version number of the AADI Real-Time Output Protocol.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SensorDependency">
+		<xs:annotation>
+			<xs:documentation>Represents a sensor dependency group (a group of sensors that must be in the same recorder group).</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Descr" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Dependency group description.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Sensors">
+					<xs:annotation>
+						<xs:documentation>List of sensors in this dependency group.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="SensorID" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Sensor ID.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="ID" type="xs:int" use="required">
+				<xs:annotation>
+					<xs:documentation>Dependency group ID.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ConnectionInterface">
+		<xs:annotation>
+			<xs:documentation>Represents a connection interface and the sensors that belong to it.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Descr" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Connection interface description.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Sensors">
+					<xs:annotation>
+						<xs:documentation>List of sensors on this connection interface.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="SensorID" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Sensor ID.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="ID" type="xs:int" use="required">
+				<xs:annotation>
+					<xs:documentation>Connection interface ID.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="VersionInfo">
+		<xs:annotation>
+			<xs:documentation>Represents version information for a software of hardware component.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ComponentID" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Component ID.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Version" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Component version.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Descr" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Component description.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="CategoryID" type="xs:int" use="required">
+				<xs:annotation>
+					<xs:documentation>Component category, e.g. software or hardware.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="IsPrimary" type="xs:boolean" use="optional">
+				<xs:annotation>
+					<xs:documentation>Value indicating if this is the primary version for a given category.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ServiceInfo">
+		<xs:annotation>
+			<xs:documentation>Represents service and calibration information for a sensor.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ProductionDate" type="xs:date" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Sensor production date.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="LastService" type="xs:date" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Date of last service.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="LastCalibration" type="xs:date" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Date of last sensor calibration.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="CalibrationInterval" type="xs:int" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Recommended calibration interval in days.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SystemInfo">
+		<xs:annotation>
+			<xs:documentation>Represents a static system parameter, such as deployment position or project name.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="ID" type="xs:int" use="required">
+						<xs:annotation>
+							<xs:documentation>System parameter ID.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="Descr" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>System parameter description.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="Type" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>Value data type.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="Format" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>Value format.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="Unit" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>Physical unit of parameter.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="RangeMin" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>Minimum valid value.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="RangeMax" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>Maximum valid value.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="DataNode">
+		<xs:annotation>
+			<xs:documentation>Represents the common base class for data from a single sensor or system node.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="StatusCode" type="xs:int" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Status code. Usually not present if everything is OK.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TimeOffset" type="xs:double" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Time offset in relation to the data element timestamp (decimal seconds).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="Parameters">
+				<xs:annotation>
+					<xs:documentation>List of measurement parameters (values).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="ID" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Unique node ID. Usually built from the sensor product number and serial number.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Descr" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Node description.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="NodeTypeID" type="xs:int" use="optional">
+			<xs:annotation>
+				<xs:documentation>AADI node type (category) ID.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:element name="SensorData">
+		<xs:annotation>
+			<xs:documentation>Represents the data from a single sensor, i.e. one or more parameters.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="DataNode">
+					<xs:attribute name="SerialNo" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>Sensor serial number.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="ProdNo" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>Sensor product number.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="ProdName" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>Sensor product name.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="Adr" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>Internal AiCaP address.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="ProtocolVer" type="xs:double" use="optional">
+						<xs:annotation>
+							<xs:documentation>Protocol version.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="VerticalPosition" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>The deployment depth (negative value) or altitude (positive value) of this particular sensor.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="GeoPosition" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>WGS-84 coordinates in Lat/Lon decimal degrees format (DD).</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="IsVirtual" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation>True if the sensor is virtual, otherwise false.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SystemData" type="DataNode">
+		<xs:annotation>
+			<xs:documentation>Represents the data from a single system node (internal device "sensor"), i.e. one or more parameters.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

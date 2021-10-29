@@ -1,0 +1,10 @@
+@ID,@Descr,@Type,@Format,@Unit,@RangeMin,@RangeMax,Value,StatusCode
+0,Input Voltage,VT_R4,%.1f,V,0,30,13.3238,
+1,Input Voltage Avg,VT_R4,%.1f,V,0,30,13.3162,
+2,Input Voltage Min,VT_R4,%.1f,V,0,30,13.2436,
+3,Input Voltage Max,VT_R4,%.1f,V,0,30,13.4156,
+4,CPU Core Active,VT_R4,,%,0,100,8.83333,
+5,Memory Used,VT_I4,,Bytes,0,32000000,22163456,
+6,Internal Temperature,VT_R4,%.1f,DegC,-40,60,4,
+7,GPS Latitude,VT_R4,%.3f,Deg,-90,90,0,68
+8,GPS Longitude,VT_R4,%.3f,Deg,-180,180,0,68

@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Device ID="5300-752" SessionID="5300-752-2020-10-05T12:13:37Z" Descr="SMARTGUARD Platform" SerialNo="752" ProdNo="5300" ProdName="SmartGuard" DeviceType="Instrument" ProtocolVer="6" xmlns="http://www.aadi.no/RTOutSchema">
+	<Time>2020-11-26T09:00:08.078Z</Time>
+	<TimeReceived>2020-11-26T08:59:06.4673683Z</TimeReceived>
+	<SystemInformation>
+		<SystemInfo ID="10" Descr="Owner" Type="VT_BSTR">Equinor ASA</SystemInfo>
+		<SystemInfo ID="13" Descr="Location " Type="VT_BSTR" />
+		<SystemInfo ID="12" Descr="Reference" Type="VT_BSTR">Mongstad buoy east</SystemInfo>
+		<SystemInfo ID="21" Descr="GeoPosition" Type="VT_BSTR" />
+		<SystemInfo ID="30" Descr="VerticalPosition" Type="VT_BSTR" />
+	</SystemInformation>
+	<Data SessionID="5300-752-0-2020-10-05T12-17-41.397Z" GroupID="0" GroupDescr="Main">
+		<Time>2020-11-26T09:00:00Z</Time>
+		<RecordNumber>7469</RecordNumber>
+		<SensorData ID="5729-71" Descr="Motus Wave Sensor 5729#71" NodeTypeID="2030" SerialNo="71" ProdNo="5729" ProdName="Motus Wave Sensor" ProtocolVer="6" GeoPosition="60.323605,5.37225">
+			<Parameters>
+				<Point ID="1" Descr="Significant Wave Height Hm0" Type="VT_R4" Format="%.2f" Unit="m" RangeMin="0" RangeMax="30">
+					<Value>0.125087</Value>
+				</Point>
+				<Point ID="2" Descr="Wave Peak Direction" Type="VT_R4" Format="%.2f" Unit="Deg.M" RangeMin="0" RangeMax="360">
+					<Value>79.3971</Value>
+				</Point>
+				<Point ID="29" Descr="Wave Mean Direction" Type="VT_R4" Format="%.2f" Unit="Deg.M" RangeMin="0" RangeMax="360">
+					<Value>50.8007</Value>
+				</Point>
+				<Point ID="31" Descr="Wave Mean Period Tm02" Type="VT_R4" Format="%.2f" Unit="s" RangeMin="0" RangeMax="30">
+					<Value>4.38354</Value>
+				</Point>
+				<Point ID="3" Descr="Wave Peak Period" Type="VT_R4" Format="%.2f" Unit="s" RangeMin="0" RangeMax="30">
+					<Value>8.82759</Value>
+				</Point>
+				<Point ID="30" Descr="Wave Height Hmax" Type="VT_R4" Format="%.2f" Unit="m" RangeMin="0" RangeMax="30">
+					<Value>0.190739</Value>
+				</Point>
+			</Parameters>
+		</SensorData>
+		<SensorData ID="4420-1072" Descr="DCS #1072" NodeTypeID="2000" SerialNo="1072" ProdNo="4420" ProdName="Doppler Current Sensor" ProtocolVer="6" GeoPosition="60.323605,5.37225">
+			<Parameters>
+				<Point ID="10" Descr="Abs Speed" Type="VT_R4" Format="%0.3f" Unit="cm/s" RangeMin="0" RangeMax="300">
+					<Value>2.55317</Value>
+				</Point>
+				<Point ID="12" Descr="Direction" Type="VT_R4" Format="%0.3f" Unit="Deg.M" RangeMin="0" RangeMax="360">
+					<Value>9.08501</Value>
+				</Point>
+				<Point ID="13" Descr="North" Type="VT_R4" Format="%0.3f" Unit="cm/s" RangeMin="-300" RangeMax="300">
+					<Value>2.52114</Value>
+				</Point>
+				<Point ID="14" Descr="East" Type="VT_R4" Format="%0.3f" Unit="cm/s" RangeMin="-300" RangeMax="300">
+					<Value>0.403144</Value>
+				</Point>
+				<Point ID="25" Descr="Heading" Type="VT_R4" Format="%0.3f" Unit="Deg.M" RangeMin="0" RangeMax="360">
+					<Value>161.999</Value>
+				</Point>
+				<Point ID="23" Descr="Tilt X" Type="VT_R4" Format="%0.3f" Unit="Deg" RangeMin="-45" RangeMax="45">
+					<Value>-1.04644</Value>
+				</Point>
+				<Point ID="24" Descr="Tilt Y" Type="VT_R4" Format="%0.3f" Unit="Deg" RangeMin="-45" RangeMax="45">
+					<Value>-0.581148</Value>
+				</Point>
+				<Point ID="21" Descr="SP Std" Type="VT_R4" Format="%0.3f" Unit="cm/s" RangeMin="0" RangeMax="20">
+					<Value>5.51757</Value>
+				</Point>
+				<Point ID="22" Descr="Strength" Type="VT_R4" Format="%0.3f" Unit="dB" RangeMin="-80" RangeMax="0">
+					<Value>-31.8309</Value>
+				</Point>
+				<Point ID="26" Descr="Ping Count" Type="VT_I2" Format="%d">
+					<Value>150</Value>
+				</Point>
+				<Point ID="41" Descr="Abs Tilt" Type="VT_R4" Format="%0.3f" Unit="Deg" RangeMin="0" RangeMax="90">
+					<Value>1.25619</Value>
+				</Point>
+				<Point ID="42" Descr="Max Tilt" Type="VT_R4" Format="%0.3f" Unit="Deg" RangeMin="0" RangeMax="90">
+					<Value>2.8322</Value>
+				</Point>
+				<Point ID="43" Descr="Std Tilt" Type="VT_R4" Format="%0.3f" Unit="Deg" RangeMin="0" RangeMax="90">
+					<Value>0.527558</Value>
+				</Point>
+			</Parameters>
+		</SensorData>
+		<SensorData ID="5400-386" Descr="DCPS #386" NodeTypeID="2000" SerialNo="386" ProdNo="5400" ProdName="Doppler Current Profiler Sensor" ProtocolVer="6" GeoPosition="60.323605,5.37225">
+			<Parameters>
+				<Point ID="12" Descr="Record State" Type="VT_I4">
+					<Value>0</Value>
+				</Point>
+				<Point ID="0" Descr="Ping Count" Type="VT_I2" Format="%d" RangeMin="0" RangeMax="3600">
+					<Value>300</Value>
+				</Point>
+				<Vector ID="248" Descr="EventReg Values" Type="VT_ARRAY|VT_I4" Unit="Flags" Dimension="4">
+					<Value>0;0;0;0</Value>
+				</Vector>
+				<Profile ID="200" Descr="Profile">
+					<Column Index="2" Descr="Column 1" SurfaceReferred="false" ColumnStartCellCenter="3" CellSize="2" NumCells="10" TransducerDirection="Down" CellCenterSpacing="2">
+						<CellAttributes>
+							<Point ID="50" Descr="Cell State1" Type="VT_I2" RangeMin="-32768" RangeMax="32767" />
+							<Point ID="49" Descr="Cell State2" Type="VT_I2" RangeMin="-32768" RangeMax="32767" />
+							<Point ID="2" Descr="Horizontal Speed" Type="VT_R4" Format="%.2f" Unit="cm/s" RangeMin="0" RangeMax="500" />
+							<Point ID="3" Descr="Direction" Type="VT_R4" Format="%.2f" Unit="Deg.M" RangeMin="0" RangeMax="360" />
+						</CellAttributes>
+						<Cell Index="0">
+							<Point ID="50">
+								<Value>0</Value>
+							</Point>
+							<Point ID="49">
+								<Value>0</Value>
+							</Point>
+							<Point ID="2">
+								<Value>4.73491</Value>
+							</Point>
+							<Point ID="3">
+								<Value>346.56</Value>
+							</Point>
+						</Cell>
+						<Cell Index="1">
+							<Point ID="50">
+								<Value>0</Value>
+							</Point>
+							<Point ID="49">
+								<Value>0</Value>
+							</Point>
+							<Point ID="2">
+								<Value>7.17734</Value>
+							</Point>
+							<Point ID="3">
+								<Value>335.6</Value>
+							</Point>
+						</Cell>
+						<Cell Index="2">
+							<Point ID="50">
+								<Value>0</Value>
+							</Point>
+							<Point ID="49">
+								<Value>0</Value>
+							</Point>
+							<Point ID="2">
+								<Value>4.93847</Value>
+							</Point>
+							<Point ID="3">
+								<Value>339.398</Value>
+							</Point>
+						</Cell>
+						<Cell Index="3">
+							<Point ID="50">
+								<Value>0</Value>
+							</Point>
+							<Point ID="49">
+								<Value>0</Value>
+							</Point>
+							<Point ID="2">
+								<Value>4.95632</Value>
+							</Point>
+							<Point ID="3">
+								<Value>328.587</Value>
+							</Point>
+						</Cell>
+						<Cell Index="4">
+							<Point ID="50">
+								<Value>0</Value>
+							</Point>
+							<Point ID="49">
+								<Value>0</Value>
+							</Point>
+							<Point ID="2">
+								<Value>8.4273</Value>
+							</Point>
+							<Point ID="3">
+								<Value>327.444</Value>
+							</Point>
+						</Cell>
+						<Cell Index="5">
+							<Point ID="50">
+								<Value>0</Value>
+							</Point>
+							<Point ID="49">
+								<Value>0</Value>
+							</Point>
+							<Point ID="2">
+								<Value>7.8659</Value>
+							</Point>
+							<Point ID="3">
+								<Value>323.654</Value>
+							</Point>
+						</Cell>
+						<Cell Index="6">
+							<Point ID="50">
+								<Value>0</Value>
+							</Point>
+							<Point ID="49">
+								<Value>0</Value>
+							</Point>
+							<Point ID="2">
+								<Value>11.3682</Value>
+							</Point>
+							<Point ID="3">
+								<Value>309.986</Value>
+							</Point>
+						</Cell>
+						<Cell Index="7">
+							<Point ID="50">
+								<Value>0</Value>
+							</Point>
+							<Point ID="49">
+								<Value>0</Value>
+							</Point>
+							<Point ID="2">
+								<Value>5.68852</Value>
+							</Point>
+							<Point ID="3">
+								<Value>310.957</Value>
+							</Point>
+						</Cell>
+						<Cell Index="8">
+							<Point ID="50">
+								<Value>0</Value>
+							</Point>
+							<Point ID="49">
+								<Value>0</Value>
+							</Point>
+							<Point ID="2">
+								<Value>1.08759</Value>
+							</Point>
+							<Point ID="3">
+								<Value>137.493</Value>
+							</Point>
+						</Cell>
+						<Cell Index="9">
+							<Point ID="50">
+								<Value>64</Value>
+							</Point>
+							<Point ID="49">
+								<Value>0</Value>
+							</Point>
+							<Point ID="2">
+								<Value>2.06392</Value>
+							</Point>
+							<Point ID="3">
+								<Value>125.349</Value>
+							</Point>
+						</Cell>
+					</Column>
+				</Profile>
+			</Parameters>
+		</SensorData>
+		<SensorData ID="GMX500-19230021" Descr="Gill MaxiMet #19230021" NodeTypeID="1060" SerialNo="19230021" ProdNo="GMX500" ProdName="Gill MaxiMet" ProtocolVer="6">
+			<Parameters>
+				<Point ID="0" Descr="Average Wind Direction" Type="VT_R4" Unit="Deg" RangeMin="0" RangeMax="360">
+					<Value>95</Value>
+				</Point>
+				<Point ID="1" Descr="Average Wind Speed" Type="VT_R4" Unit="m/s" RangeMin="0" RangeMax="60">
+					<Value>1.93</Value>
+				</Point>
+				<Point ID="2" Descr="Gust Direction" Type="VT_R4" Unit="Deg" RangeMin="0" RangeMax="360">
+					<Value>85</Value>
+				</Point>
+				<Point ID="3" Descr="Gust Speed" Type="VT_R4" Unit="m/s" RangeMin="0" RangeMax="60">
+					<Value>1.82</Value>
+				</Point>
+				<Point ID="4" Descr="Pressure" Type="VT_R4" Unit="hPa" RangeMin="300" RangeMax="1100">
+					<Value>1016</Value>
+				</Point>
+				<Point ID="5" Descr="Pressure at Sea Level" Type="VT_R4" Unit="hPa" RangeMin="300" RangeMax="1100">
+					<Value>1016</Value>
+				</Point>
+				<Point ID="6" Descr="Pressure at Station" Type="VT_R4" Unit="hPa" RangeMin="300" RangeMax="1100">
+					<Value>1016</Value>
+				</Point>
+				<Point ID="7" Descr="Relative Humidity" Type="VT_R4" Unit="%" RangeMin="0" RangeMax="100">
+					<Value>95</Value>
+				</Point>
+				<Point ID="8" Descr="Absolute Humidity" Type="VT_R4" Unit="g/m3">
+					<Value>6.45</Value>
+				</Point>
+				<Point ID="9" Descr="Temperature" Type="VT_R4" Unit="DegC" RangeMin="-40" RangeMax="70">
+					<Value>4.8</Value>
+				</Point>
+				<Point ID="10" Descr="Dewpoint" Type="VT_R4" Unit="DegC" RangeMin="-40" RangeMax="70">
+					<Value>4.2</Value>
+				</Point>
+				<Point ID="11" Descr="Compass Heading" Type="VT_R4" Unit="Deg" RangeMin="0" RangeMax="360">
+					<Value>45</Value>
+				</Point>
+				<Point ID="12" Descr="Supply Voltage" Type="VT_R4" Unit="V" RangeMin="5" RangeMax="30">
+					<Value>10</Value>
+				</Point>
+				<Point ID="13" Descr="Status" Type="VT_R4">
+					<Value>4</Value>
+				</Point>
+				<Point ID="14" Descr="GPS Latitude" Type="VT_R4" Unit="Deg" RangeMin="-90" RangeMax="90">
+					<Value>60.8094</Value>
+				</Point>
+				<Point ID="15" Descr="GPS longitude" Type="VT_R4" Unit="Deg" RangeMin="-180" RangeMax="180">
+					<Value>5.04888</Value>
+				</Point>
+				<Point ID="16" Descr="GPS Altitude" Type="VT_R4" Unit="m" RangeMin="0" RangeMax="100">
+					<Value>6.1</Value>
+				</Point>
+			</Parameters>
+		</SensorData>
+		<SensorData ID="5979-158631" Descr="Lantern SolaMax-65 #158631" NodeTypeID="240" SerialNo="158631" ProdNo="5979" ProdName="Lantern SolaMax-65" ProtocolVer="6">
+			<Parameters>
+				<Point ID="0" Descr="Lantern voltage" Type="VT_R4" Unit="volt" RangeMin="0" RangeMax="16">
+					<Value>12.7318</Value>
+				</Point>
+				<Point ID="2" Descr="Lantern voltage Average" Type="VT_R4" Unit="volt" RangeMin="0" RangeMax="16">
+					<Value>12.7212</Value>
+				</Point>
+				<Point ID="3" Descr="Lantern voltage Min" Type="VT_R4" Unit="volt" RangeMin="0" RangeMax="16">
+					<Value>12.7088</Value>
+				</Point>
+				<Point ID="4" Descr="Lantern voltage Max" Type="VT_R4" Unit="volt" RangeMin="0" RangeMax="16">
+					<Value>12.7318</Value>
+				</Point>
+				<Point ID="5" Descr="Lantern voltage StdDev" Type="VT_R4">
+					<Value>0.00744893</Value>
+				</Point>
+				<Point ID="7" Descr="Lantern voltage Number Of Samples" Type="VT_I4" RangeMin="0" RangeMax="12">
+					<Value>0</Value>
+				</Point>
+				<Point ID="8" Descr="Lantern voltage Executed Samples" Type="VT_I4" RangeMin="0" RangeMax="12">
+					<Value>12</Value>
+				</Point>
+			</Parameters>
+		</SensorData>
+		<SystemData ID="SYSDATA-0" Descr="System Parameters">
+			<Parameters>
+				<Point ID="0" Descr="Input Voltage" Type="VT_R4" Format="%.1f" Unit="V" RangeMin="0" RangeMax="30">
+					<Value>13.3238</Value>
+				</Point>
+				<Point ID="1" Descr="Input Voltage Avg" Type="VT_R4" Format="%.1f" Unit="V" RangeMin="0" RangeMax="30">
+					<Value>13.3162</Value>
+				</Point>
+				<Point ID="2" Descr="Input Voltage Min" Type="VT_R4" Format="%.1f" Unit="V" RangeMin="0" RangeMax="30">
+					<Value>13.2436</Value>
+				</Point>
+				<Point ID="3" Descr="Input Voltage Max" Type="VT_R4" Format="%.1f" Unit="V" RangeMin="0" RangeMax="30">
+					<Value>13.4156</Value>
+				</Point>
+				<Point ID="4" Descr="CPU Core Active" Type="VT_R4" Unit="%" RangeMin="0" RangeMax="100">
+					<Value>8.83333</Value>
+				</Point>
+				<Point ID="5" Descr="Memory Used" Type="VT_I4" Unit="Bytes" RangeMin="0" RangeMax="32000000">
+					<Value>22163456</Value>
+				</Point>
+				<Point ID="6" Descr="Internal Temperature" Type="VT_R4" Format="%.1f" Unit="DegC" RangeMin="-40" RangeMax="60">
+					<Value>4</Value>
+				</Point>
+				<Point ID="7" Descr="GPS Latitude" Type="VT_R4" Format="%.3f" Unit="Deg" RangeMin="-90" RangeMax="90">
+					<StatusCode>68</StatusCode>
+					<Value>0</Value>
+				</Point>
+				<Point ID="8" Descr="GPS Longitude" Type="VT_R4" Format="%.3f" Unit="Deg" RangeMin="-180" RangeMax="180">
+					<StatusCode>68</StatusCode>
+					<Value>0</Value>
+				</Point>
+			</Parameters>
+		</SystemData>
+		<SpecifiedInterval>600</SpecifiedInterval>
+		<ActualInterval>600.02</ActualInterval>
+	</Data>
+	<Notifications />
+</Device>
