@@ -1,0 +1,6 @@
+# Packages requirements
+
+pandas 
+sqlalchemy 
+pyodbc
+azure-storage-blob
